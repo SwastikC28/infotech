@@ -34,16 +34,6 @@ const CustomerSchema = new mongoose.Schema({
   },
 });
 
-//Hashing Password
-CustomerSchema.pre("save", function (next) {
-  let salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
 
-//Matching Password
-UserSchema.methods.checkPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
 
 module.exports = mongoose.model("User", CustomerSchema);
